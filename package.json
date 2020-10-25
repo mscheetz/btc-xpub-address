@@ -2,7 +2,7 @@
   "name": "btc-xpub-address",
   "version": "0.1.0",
   "description": "Derive BTC address from an X-Pub",
-  "main": "./src/index.ts",
+  "main": "./dist/index.js",
   "keywords": [
     "bitcoin",
     "bitcoinjs",
@@ -10,12 +10,19 @@
     "javascript"
   ],
   "scripts": {
-    "build": "tsc -p ./tsconfig.json",
+    "build": "tsc -p .",
     "dev": "ts-node src/index.ts",
     "test": "./node_modules/.bin/mocha --require ts-node/register ./tests/*.spec.ts"
   },
   "author": "Matt Scheetz",
   "license": "MIT",
+  "bin": {
+    "btc-xpub-address": "./dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mscheetz/btc-xpub-address.git"
+  },
   "dependencies": {
     "@types/bip32": "^2.0.0",
     "@types/bitcoinjs-lib": "^5.0.0",
