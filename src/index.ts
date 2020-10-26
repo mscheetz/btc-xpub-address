@@ -2,7 +2,7 @@ import * as bjs from 'bitcoinjs-lib';
 import * as bip32 from 'bip32';
 import * as crypto from 'crypto';
 
-export class BtcXpubAddress {
+class BtcXpubAddress {
   /**
    * Get a random number
    */
@@ -60,6 +60,7 @@ export class BtcXpubAddress {
 
   /**
    * Get a BTC address from an X-Pub
+   * @param xpub BTC X-Pub
    */
   static getAddress = async(xpub: string): Promise<string> => {
     const index = await BtcXpubAddress.getRandomNumber();
@@ -72,4 +73,21 @@ export class BtcXpubAddress {
       throw err;
     }
   }
+
+  /**
+   * Get a collection of BTC addresses from an X-Pub
+   * @param xpub BTC X-Pub
+   * @param numberAddresses Number of addresses to return
+   */
+  static getAddresses = async(xpub: string, numberAddresses: number): Promise<string[]> => {
+    const index = await BtcXpubAddress.getRandomNumber();
+    let addresses: string[] = [];
+
+    for(let i = 0; i < numberAddresses; i++){
+      addresses.push(await BtcXpubAddress.getAddress(xpub));
+    }
+    
+    return addresses;
+  }
 }
+export default BtcXpubAddress;
