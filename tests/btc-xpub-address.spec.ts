@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { BtcXpubAddress } from "../src";
+import BtcXpubAddress from "../src";
 
 describe('getAddress', () => {
     context('valid address', function() {
@@ -30,6 +30,34 @@ describe('getAddress', () => {
             .catch(function(err) {
                 expect(function() { throw err })
                 .to.throw(Error, 'Invalid checksum');
+            })
+        })
+    })
+})
+describe('getAddresses', () => {
+    context('get requested number of addresses', function() {
+        it('should return 10 addresses', function() {
+            const xpub = 'xpub6CzDCPbtLrrn4VpVbyyQLHbdSMpZoHN4iuW64VswCyEpfjM2mJGdaHJ2DyuZwtst96E16VvcERb8BBeJdHSCVmAq9RhtRQg6eAZFrTKCNqf';
+            const count = 10;
+            return BtcXpubAddress.getAddresses(xpub, count)
+            .then(function(addresses) {
+                expect(addresses)
+                .to.be.an('array')
+                .to.have.length(10);
+            })
+        })
+    })
+    context('valid addresses', function() {
+        it('should return 10 valid addresses', function() {
+            const xpub = 'xpub6CzDCPbtLrrn4VpVbyyQLHbdSMpZoHN4iuW64VswCyEpfjM2mJGdaHJ2DyuZwtst96E16VvcERb8BBeJdHSCVmAq9RhtRQg6eAZFrTKCNqf';
+            const count = 10;
+            return BtcXpubAddress.getAddresses(xpub, count)
+            .then(function(addresses) {
+                addresses.forEach(addy => {
+                    expect(addy)
+                    .to.be.a('string')
+                    .that.matches(/^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$/);
+                });
             })
         })
     })
