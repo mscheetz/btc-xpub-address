@@ -16,11 +16,11 @@ import BtcXpubAddress from 'btc-xpub-address';
 const xpub = 'your xpub';
 const address = await BtcXpubAddress.getAddress(xpub);
 ```
-### Get multiple BTC addresses:
+### Get multiple BTC addresses (10):
 ```
 import BtcXpubAddress from 'btc-xpub-address';
 
 const xpub = 'your xpub';
-const address = await BtcXpubAddress.getAddress(xpub, 10); // Get 10 addresses from your XPUB
+const address = await BtcXpubAddress.getAddresses(xpub, 10);
 ```
 For more information about BTC X-Pubs click [here](https://support.samourai.io/article/49-xpub-s-ypub-s-zpub-s)
