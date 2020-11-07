@@ -1,6 +1,6 @@
 {
   "name": "btc-xpub-address",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "description": "Derive BTC address from an X-Pub",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
