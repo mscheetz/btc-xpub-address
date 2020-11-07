@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2020
+ * 
+ * Generate BTC addresses from an X-PUB
+ * 
+ * @summary BTC address generators
+ * @author Matt Scheetz
+ * 
+ * Created at     : 2020-10-25
+ * Last modified  : 2020-11-07
+ */
 import * as bjs from 'bitcoinjs-lib';
 import * as bip32 from 'bip32';
 import * as crypto from 'crypto';
@@ -61,9 +72,12 @@ class BtcXpubAddress {
   /**
    * Get a BTC address from an X-Pub
    * @param xpub BTC X-Pub
+   * @param idx Address index (optional)
    */
-  static getAddress = async(xpub: string): Promise<string> => {
-    const index = await BtcXpubAddress.getRandomNumber();
+  static getAddress = async(xpub: string, idx?: number): Promise<string> => {
+    const index = typeof(idx) === 'undefined' 
+        ? await BtcXpubAddress.getRandomNumber()
+        : idx;
 
     try{
       const address = await BtcXpubAddress.getBtcAddress(xpub, index)!;
@@ -80,11 +94,25 @@ class BtcXpubAddress {
    * @param numberAddresses Number of addresses to return
    */
   static getAddresses = async(xpub: string, numberAddresses: number): Promise<string[]> => {
-    const index = await BtcXpubAddress.getRandomNumber();
     let addresses: string[] = [];
 
     for(let i = 0; i < numberAddresses; i++){
       addresses.push(await BtcXpubAddress.getAddress(xpub));
+    }
+    
+    return addresses;
+  }
+
+  /**
+   * Get a collection of BTC addresses from an X-Pub for given indexes
+   * @param xpub BTC X-Pub
+   * @param indexes Number of addresses to return
+   */
+  static getAddressesAtIndexes = async(xpub: string, indexes: number[]): Promise<string[]> => {
+    let addresses: string[] = [];
+
+    for(let i = 0; i < indexes.length; i++) {
+      addresses.push(await BtcXpubAddress.getAddress(xpub, indexes[i]));
     }
     
     return addresses;
